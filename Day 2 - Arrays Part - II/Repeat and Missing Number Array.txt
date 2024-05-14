@@ -1,0 +1,34 @@
+// DO it your self Atleast try
+
+public int[] repeatedNumber(final int[] A) {
+    int[] arr = new int[2];
+    int ans = 0, i = 0;
+
+    while (i < A.length) {
+        if (A[i] <= i) {
+            ans = A[i];
+            i++;
+        } else if (A[i] == i + 1 && i + 1 != A.length) {
+            i++;
+        } else {
+            int temp = A[i];
+            if (A[i] == A[temp - 1]) {
+                ans = A[i];
+                i++;
+            }
+
+            A[i] = A[temp - 1];
+            A[temp - 1] = temp;
+        }
+    }
+
+    arr[0] = ans;
+    for (int k = 0; k < A.length; k++) {
+        if (A[k] != k + 1) {
+            arr[1] = k + 1;
+            break; // Break once B is found
+        }
+    }
+
+    return arr;
+}
