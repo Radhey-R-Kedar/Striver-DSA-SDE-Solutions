@@ -1,0 +1,61 @@
+class Solution {
+    static int cnt;
+    public int reversePairs(int[] nums) {
+        cnt =0;
+        msort(nums, 0, nums.length-1);
+        return cnt;
+    }
+
+    public void msort(int []nums, int start, int end){
+        if(start == end) return;
+        int mid = start + (end-start)/2;
+        
+        msort(nums, start, mid);
+        msort(nums, mid+1, end);
+
+        merge(nums, start, mid, end);
+    }
+
+    public void countPairs(int nums[], int start, int mid, int end){
+        int j=mid+1;
+        int currcount = 0;
+        for(int i=start; i<=mid; i++){
+            while(j<=end && (long)nums[i] > (long)nums[j]*2){
+               j++;
+               currcount++;
+            }
+            cnt+= currcount;
+        }
+    }
+
+    public void merge(int nums[], int start, int mid, int end){
+        countPairs(nums, start, mid, end);
+
+        ArrayList<Integer> temp  = new ArrayList<>();
+
+        int i= start, j= mid+1;
+        while(i<=mid && j<=end){
+            if(nums[i]<nums[j]){
+                temp.add(nums[i]);
+                i++;
+            }else{
+                temp.add(nums[j]);
+                j++;
+            }
+        }
+
+        while(i<=mid){
+            temp.add(nums[i]);
+            i++;
+        } 
+
+        while(j<=end){
+            temp.add(nums[j]);
+            j++;
+        }
+
+        for(i=start; i<=end; i++){
+            nums[i]=temp.get(i-start);
+        }
+    }
+}
